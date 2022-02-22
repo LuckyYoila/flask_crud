@@ -17,7 +17,7 @@
             
             <div>
                 {% for todo in todos %}
-                    <p>{{todo}} <a href="{{url_for('delete', todo_item=todo )}}">delete</a></p>
+                    <p>{{todo}} <a href="{{url_for('delete', todo_item=todo )}}">delete</a> <a href="{{ url_for('update', todo_item=todo) }}">Update</a></p>
                 {% endfor %}
             </div>
     </div>

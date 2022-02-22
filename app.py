@@ -12,7 +12,6 @@ def indexs():
 def create_todo():
     new_todo = request.form.get("new_todo")
     todoData.append(new_todo)
-    print(todoData)
     return redirect(url_for("indexs"))
 
 @app.route('/delete/<todo_item>') 
@@ -20,6 +19,51 @@ def delete(todo_item):
     todoData.remove(todo_item)
 
     return redirect(url_for('indexs'))
+
+index_to_update = ''
+@app.route('/update/<todo_item>')
+def update(todo_item):
+
+    global index_to_update
+    index_to_update = todoData.index(todo_item)
+    return render_template('update.html', todo_item = todo_item)
+
+@app.route('/update_item', methods = ['POST'])
+def update_item():
+
+    if request.method == 'POST':
+
+        new_item = request.form.get('new_item')
+        todoData[index_to_update] = new_item
+
+        return redirect(url_for('indexs'))
+
+
+
+
+
+
+# index_to_update = ''
+# @app.route('/update/<todo_item>', methods = ['GET', 'POST'])
+# def update(todo_item):
+
+    
+#     index = todoData.index(todo_item)
+
+#     global index_to_update
+#     index_to_update = index
+#     return render_template('update.html', todo_item = todo_item)
+
+# @app.route('/update_item', methods = ['POST'])
+# def update_item():
+
+#     if request.method == 'POST':
+
+#         new_item = request.form.get('new_item')
+#         todoData[index_to_update] = new_item
+
+#         return redirect(url_for('indexs'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
